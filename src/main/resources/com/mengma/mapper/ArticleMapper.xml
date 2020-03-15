@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mengma.mapper.ArticleMapper">
+
+    <select id="pageQuery" parameterType="articlePageQuery" resultType="article">
+        select * from t_article
+        <where>
+            <if test="articlePageQuery.id!=null">
+                and   id = #{articlePageQuery.id,jdbcType=INTEGER}
+            </if>
+            <if test="articlePageQuery.categories!=null">
+               and categories = #{articlePageQuery.categories,jdbcType=VARCHAR}
+            </if>
+        </where>
+        limit #{articlePageQuery.pageIndex,jdbcType=INTEGER},#{articlePageQuery.pageSize,jdbcType=INTEGER}
+    </select>
+
+    <select id="pageQueryCount" parameterType="articlePageQuery" resultType="Integer">
+        select count(1) from t_article
+        <where>
+            <if test="articlePageQuery.id!=null">
+                and   id = #{articlePageQuery.id,jdbcType=INTEGER}
+            </if>
+            <if test="articlePageQuery.categories!=null">
+                and categories = #{articlePageQuery.categories,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
